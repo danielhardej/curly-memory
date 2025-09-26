@@ -17,5 +17,6 @@ namespace MemoryGameApi.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? CompletedAt { get; set; }
         public TimeSpan? Duration => CompletedAt?.Subtract(CreatedAt);
+        public string? DurationFormatted => Duration?.TotalSeconds.ToString("F0") + "s";
     }
 }

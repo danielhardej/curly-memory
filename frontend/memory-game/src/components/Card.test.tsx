@@ -30,31 +30,31 @@ describe('Card Component', () => {
 
   test('calls onCardClick when clicked and not flipped', () => {
     render(<Card card={mockCard} onCardClick={mockOnCardClick} />);
-    const cardElement = screen.getByText('?').closest('.card');
-    fireEvent.click(cardElement!);
+    const cardElement = screen.getByText('?');
+    fireEvent.click(cardElement);
     expect(mockOnCardClick).toHaveBeenCalledWith(1);
   });
 
   test('does not call onCardClick when card is already flipped', () => {
     const flippedCard = { ...mockCard, isFlipped: true };
     render(<Card card={flippedCard} onCardClick={mockOnCardClick} />);
-    const cardElement = screen.getByText('🐶').closest('.card');
-    fireEvent.click(cardElement!);
+    const cardElement = screen.getByText('🐶');
+    fireEvent.click(cardElement);
     expect(mockOnCardClick).not.toHaveBeenCalled();
   });
 
   test('does not call onCardClick when card is matched', () => {
     const matchedCard = { ...mockCard, isMatched: true };
     render(<Card card={matchedCard} onCardClick={mockOnCardClick} />);
-    const cardElement = screen.getByText('?').closest('.card');
-    fireEvent.click(cardElement!);
+    const cardElement = screen.getByText('?');
+    fireEvent.click(cardElement);
     expect(mockOnCardClick).not.toHaveBeenCalled();
   });
 
   test('does not call onCardClick when disabled', () => {
     render(<Card card={mockCard} onCardClick={mockOnCardClick} disabled />);
-    const cardElement = screen.getByText('?').closest('.card');
-    fireEvent.click(cardElement!);
+    const cardElement = screen.getByText('?');
+    fireEvent.click(cardElement);
     expect(mockOnCardClick).not.toHaveBeenCalled();
   });
 });

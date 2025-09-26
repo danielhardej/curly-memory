@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Game, GameStatus } from '../types/game';
 import gameService from '../services/gameService';
 import Card from './Card';
@@ -11,7 +11,7 @@ const GameBoard: React.FC = () => {
   const [gridSize, setGridSize] = useState(4);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
 
-  const createNewGame = async () => {
+  const createNewGame = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -23,7 +23,7 @@ const GameBoard: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [gridSize]);
 
   const handleCardClick = async (cardId: number) => {
     if (!game || game.status !== GameStatus.InProgress || flippedCards.length >= 2) {
@@ -57,20 +57,11 @@ const GameBoard: React.FC = () => {
     return `game-grid grid-${gridSize}x${gridSize}`;
   };
 
-  const formatDuration = (duration?: string) => {
-    if (!duration) return '0s';
-    const match = duration.match(/(\d+):(\d+):(\d+)\.(\d+)/);
-    if (match) {
-      const [, hours, minutes, seconds] = match;
-      const totalSeconds = parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
-      return `${totalSeconds}s`;
-    }
-    return duration;
-  };
+
 
   useEffect(() => {
     createNewGame();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [createNewGame]);
 
   if (loading) {
     return <div className="loading">Creating new game...</div>;
@@ -107,8 +98,8 @@ const GameBoard: React.FC = () => {
           <div className="game-stats">
             <span>Moves: {game.moves}</span>
             <span>Matched Pairs: {game.matchedPairs}/{game.cards.length / 2}</span>
-            {game.status === GameStatus.Completed && game.duration && (
-              <span>Time: {formatDuration(game.duration)}</span>
+            {game.status === GameStatus.Completed && game.durationFormatted && (
+              <span>Time: {game.durationFormatted}</span>
             )}
           </div>
           

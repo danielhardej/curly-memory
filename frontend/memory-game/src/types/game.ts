@@ -20,6 +20,7 @@ export interface Game {
   createdAt: string;
   completedAt?: string;
   duration?: string;
+  durationFormatted?: string;
   isGameComplete: boolean;
 }
 

@@ -1,6 +1,6 @@
 import { Game, CreateGameRequest, FlipCardRequest } from '../types/game';
 
-const API_BASE_URL = 'https://localhost:7253/api'; // Default ASP.NET Core HTTPS port
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5143/api';
 
 class GameService {
   async createGame(request: CreateGameRequest): Promise<Game> {

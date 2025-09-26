@@ -20,6 +20,7 @@ namespace MemoryGameApi.Models
         public DateTime CreatedAt { get; set; }
         public DateTime? CompletedAt { get; set; }
         public TimeSpan? Duration { get; set; }
+        public string? DurationFormatted { get; set; }
         public bool IsGameComplete { get; set; }
     }
 }
